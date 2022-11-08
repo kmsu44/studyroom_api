@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from typing import Union
 from datetime import datetime, date
 import json
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 app = FastAPI()
 
 # 로그인
@@ -97,6 +98,7 @@ def Checklist(id,password):
 
 
 # uvicorn main:app --reload
-# http://127.0.0.1:8000/
-# http://127.0.0.1:8000/docs
+#http://52.78.105.103
+#http://52.78.105.103/docs
+#python3 -m uvicorn main:app
 
