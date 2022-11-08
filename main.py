@@ -8,7 +8,6 @@ from pydantic import BaseModel
 from typing import Union
 from datetime import datetime, date
 import json
-requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 app = FastAPI()
 
 # 로그인
@@ -28,7 +27,7 @@ def Login(id,password):
       "Referer" : "https://portal.sejong.ac.kr"
       }
   
-  r = session.post(url = login, data=my, headers=header, timeout = 3)
+  r = session.post(url = login, data=my, headers=header, timeout = 3, verify =False)
   
   if 'ssotoken' in r.headers.get('Set-Cookie', ''):
     return {"result" : "1" }
@@ -50,7 +49,7 @@ def Checklist(id,password):
       "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
       "Referer" : "https://portal.sejong.ac.kr"
       }
-  r = session.post(url = login, data=my, headers=header, timeout = 3)
+  r = session.post(url = login, data=my, headers=header, timeout = 3,verify =False)
   url = "http://library.sejong.ac.kr/sso/Login.ax"
   r = session.post(url,verify=False)
 
