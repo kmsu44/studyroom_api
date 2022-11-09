@@ -176,7 +176,7 @@ def table(id,password):
     list_of_urls = []
     for room in roomdata:
         list_of_urls.append((url,room)) 
-    with ThreadPoolExecutor(max_workers=10) as pool:
+    with ThreadPoolExecutor(max_workers=5) as pool:
         response_list = list(pool.map(gettable,list_of_urls))
 
 
@@ -302,7 +302,8 @@ def table(id,password):
             'maxuser': 4,
         }]
     for idx,data in enumerate(response_list):
-        soup = BeautifulSoup(data.text, "html.parser")
+        html = ' '.join(data.text.split())
+        soup = BeautifulSoup(html, "html.parser")
         table_html = soup.find_all('table')
         table_arry = pd.read_html(str(table_html))
         table = table_arry[1]
