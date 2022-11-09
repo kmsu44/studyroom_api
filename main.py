@@ -97,7 +97,7 @@ def Checklist(id,password):
       result.append(room)
   return result
 
-@app.get("/table")
+@app.get("/table/{id}/{password}")
 def table(id,password):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
@@ -319,7 +319,7 @@ def table(id,password):
 
 
 # uvicorn main:app --reload
-#http://3.38.95.91
-#http://3.38.95.91/docs
+# http://52.79.223.149
+# http://52.79.223.149/docs
 #python3 -m uvicorn main:app
 
