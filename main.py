@@ -98,15 +98,15 @@ def Checklist(id,password):
   return result
 
 @app.get("/table")
-def table():
+def table(id,password):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': "18011485",
-        'password': "rlaalstn1301",
+        'id': id,
+        'password': password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -183,7 +183,6 @@ def table():
     result = [
         {
             'roomId': 23,
-            'timetable': [0],
             'name': '14 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -192,7 +191,6 @@ def table():
         },
         {
             'roomId': 24,
-            'timetable': [0],
             'name': '15 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -201,7 +199,6 @@ def table():
         },
         {
             'roomId': 25,
-            'timetable': [0],
             'name': '16 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -210,7 +207,6 @@ def table():
         },
         {
             'roomId': 26,
-            'timetable': [0],
             'name': '17 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -219,7 +215,6 @@ def table():
         },
         {
             'roomId': 27,
-            'timetable': [0],
             'name': '18 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -228,7 +223,6 @@ def table():
         },
         {
             'roomId': 28,
-            'timetable': [0],
             'name': '19 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -237,7 +231,6 @@ def table():
         },
         {
             'roomId': 29,
-            'timetable': [0],
             'name': '20 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -246,7 +239,6 @@ def table():
         },
         {
             'roomId': 30,
-            'timetable': [0],
             'name': '21 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -255,7 +247,6 @@ def table():
         },
         {
             'roomId': 31,
-            'timetable': [0],
             'name': '22 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -264,7 +255,6 @@ def table():
         },
         {
             'roomId': 32,
-            'timetable': [0],
             'name': '23 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -273,7 +263,6 @@ def table():
         },
         {
             'roomId': 33,
-            'timetable': [0],
             'name': '24 스터디룸 (4층)',
             'opentime': 10,
             'closetime': 21,
@@ -282,7 +271,6 @@ def table():
         },
         {
             'roomId': 8,
-            'timetable': [0],
             'name': '교육실 (2층)',
             'opentime': 10,
             'closetime': 17,
@@ -291,7 +279,6 @@ def table():
         },
         {
             'roomId': 48,
-            'timetable': [0],
             'name': '대양 AI 콜라보랩 Talk Room3',
             'opentime': 10,
             'closetime': 16,
@@ -300,7 +287,6 @@ def table():
         },
         {
             'roomId': 49,
-            'timetable': [0],
             'name': '대양 AI 콜라보랩 라운지A',
             'opentime': 10,
             'closetime': 16,
@@ -309,7 +295,6 @@ def table():
         },
         {
             'roomId': 47,
-            'timetable': [0],
             'name': '대양 AI 콜라보랩 라운지A',
             'opentime': 10,
             'closetime': 16,
@@ -321,8 +306,13 @@ def table():
         table_html = soup.find_all('table')
         table_arry = pd.read_html(str(table_html))
         table = table_arry[1]
-        result[idx]["timetable"] = (table)
-
+        table = table.drop(0,axis = 1)
+        a = len(table.index)
+        tmp =[]
+        for i in range(a):
+            tmp.append(table.iloc[i].to_list())
+        result[idx]["timetable"] = tmp;
+        
     return result
 
 
