@@ -15,26 +15,26 @@ app = FastAPI()
 # 로그인
 @app.get("/login/{id}/{password}")
 def Login(id,password):
-  session = requests.session()
-  login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
-  my={
-      'mainLogin': 'Y',
-      'rtUrl': 'blackboard.sejong.ac.kr',
-      'id': id,
-      'password': password,
-  }
-  header={
-      "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
-      "Referer" : "https://portal.sejong.ac.kr"
-      }
-  
-  r = session.post(url = login, data=my, headers=header, timeout = 3, verify =False)
-  
-  if 'ssotoken' in r.headers.get('Set-Cookie', ''):
-    return {"result" : "1" }
-  else:
-    return {"result" : "0" }
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    
+    r = session.post(url = login, data=my, headers=header, timeout = 3, verify =False)
+    
+    if 'ssotoken' in r.headers.get('Set-Cookie', ''):
+        return {"result" : "1" }
+    else:
+        return {"result" : "0" }
 #예약 리스트
 @app.get("/checklist/{id}/{password}")
 def Checklist(id,password):
@@ -77,28 +77,31 @@ def Checklist(id,password):
       studyroom_id.append(t)
   p = parser.make2d(tmp)
   result = []
-  for idx, data in enumerate(p):
-      room = {}
-      room["title"] = data[0]
-      date = data[1][0:10]
-      datetime_date = datetime.strptime(date,'%Y/%m/%d')
-      day = datetime_date.weekday()
-      month = datetime_date.month
-      datee = datetime_date.day
-      room["month"] = month
-      room["datee"] = datee
-      room["day"] = day 
-      
-      room["starttime"] = data[1][11:13]
-      time = data[1][20]
-      room["endtime"] = int(data[1][11:13]) + int(time)
-      room["number"] = data[2]
-      room["roomid"] = studyroom_id[idx]
-      result.append(room)
+  if p[0][2] != '* 예약내역이 없습니다.':
+    result = []
+    for idx, data in enumerate(p):
+        room = {}
+        room["title"] = data[0]
+        date = data[1][0:10]
+        datetime_date = datetime.strptime(date,'%Y/%m/%d')
+        day = datetime_date.weekday()
+        month = datetime_date.month
+        datee = datetime_date.day
+        room["month"] = month
+        room["datee"] = datee
+        room["day"] = day 
+        
+        room["starttime"] = data[1][11:13]
+        time = data[1][20]
+        room["endtime"] = int(data[1][11:13]) + int(time)
+        room["number"] = data[2]
+        room["bookingId"] = studyroom_id[idx]
+        result.append(room)
+
   return result
 
 @app.get("/table/{id}/{password}")
-def table(id,password):
+def Table(id,password):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -317,7 +320,116 @@ def table(id,password):
     return result
 
 
+@app.get("/Remove/{id}/{password}/{roomId}/{cancelMsg}/{bookingId}")
+def Remove(id, password, roomId, cancelMsg, bookingId):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3,verify =False)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+    
+    #실행
+    remove_data = {
+        'cancelMsg': cancelMsg,
+        'bookingId': bookingId,
+        'expired': 'C',
+        'roomId': roomId,
+        'mode': 'update',
+        'classId': '0'
+    }
+    booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
+    r = session.post(booking_url, data = remove_data,verify=False)
+    return {"result" : "몰라용"}
+
+@app.get("/UserFind/{id}/{password}/{sid}/{name}/{year}/{month}/{datee}")
+def UserFind(id,password,sid,name,year,month,datee):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+
+
+    # 파싱
+    url = "https://library.sejong.ac.kr/studyroom/UserFind.axa"
+    data = {
+    'altPid' : sid,
+    'name': name,
+    'userBlockUser' : "Y",
+    'year': year,
+    'month' : month,
+    'day' : datee
+    }
+    r = session.post(url, data =data, verify=False)
+    return r.headers['X-JSON']
+
+@app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{maxuser}/{roomId}/{id1}/{name1}/{id2}/{name2}/{ipid0}/{ipid1}/{ipid2}")
+def Reservation(id, password, year, month, datee,startHour, hour, purpose,maxuser,roomId,id1,name1,id2,name2,ipid0,ipid1,ipid2):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+    # 파싱
+    booking_data = {
+        'year' : year,
+        'month' : month,
+        'day' : datee,
+        'startHour' : startHour,
+        'closeTime' : startHour,
+        'hours' : hour,
+        'altPid1' : id1,
+        'name1' : name1,
+        'altPid2' : id2,
+        'name2' : name2,
+        'purpose' : purpose,
+        'ipid1' : ipid1,
+        'ipid2' : ipid2,
+        'mode' : 'INSERT',
+        'idx' : maxuser,
+        'ipid' : ipid0,
+        'roomId' : roomId
+    }
+    booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
+    rrr = session.post(booking_url, data = booking_data,verify=False)
+    return {"result" : rrr.text}
+
+
+# @app.get("/Reservation")
+# def Reservation():
 
 # uvicorn main:app --reload
 # http://52.79.223.149
