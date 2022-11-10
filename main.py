@@ -100,7 +100,7 @@ def Checklist(id,password):
 
   return result
 
-@app.get("/table/{id}/{password}")
+@app.get("/Table/{id}/{password}")
 def Table(id,password):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
