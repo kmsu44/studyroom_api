@@ -100,8 +100,9 @@ def Checklist(id,password):
 
   return result
 
-@app.get("/Table/{id}/{password}")
-def Table(id,password):
+@app.get("/Table/{id}/{password}/{year}/{month}")
+def Table(id,password,year,month):
+    # month = 0~11
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -119,53 +120,81 @@ def Table(id,password):
     url = "http://library.sejong.ac.kr/sso/Login.ax"
     r = session.post(url,verify=False)
 
-
-
     roomdata =[
         {
             'roomId': 23,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 24,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 25,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 26,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 27,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 28,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 29,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 30,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 31,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 32,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 33,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 8,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 48,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 49,
+            'year' : year,
+            'month': month,
         },
         {
             'roomId': 47,
+            'year' : year,
+            'month': month,
         }
     ]
 
@@ -179,7 +208,7 @@ def Table(id,password):
     list_of_urls = []
     for room in roomdata:
         list_of_urls.append((url,room)) 
-    with ThreadPoolExecutor(max_workers=5) as pool:
+    with ThreadPoolExecutor(max_workers=10) as pool:
         response_list = list(pool.map(gettable,list_of_urls))
 
 
@@ -427,7 +456,12 @@ def Reservation(id, password, year, month, datee,startHour, hour, purpose,maxuse
     rrr = session.post(booking_url, data = booking_data,verify=False)
     return {"result" : rrr.text}
 
-
+@app.get("/test")
+def test():
+    result = {}
+    result[1] = 1
+    result[2] = 2
+    return result
 # @app.get("/Reservation")
 # def Reservation():
 
