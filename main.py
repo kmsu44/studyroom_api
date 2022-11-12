@@ -103,8 +103,8 @@ def Checklist(id,password):
 
 @app.get("/Table/{id}/{password}/{year}/{month}")
 def Table(id,password,year,month):
-    a = time.time()
     # month = 0~11
+    start = time.time()
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -210,6 +210,7 @@ def Table(id,password,year,month):
     list_of_urls = []
     for room in roomdata:
         list_of_urls.append((url,room)) 
+    a = time.time()
     with ThreadPoolExecutor(max_workers=5) as pool:
         response_list = list(pool.map(gettable,list_of_urls))
 
@@ -347,8 +348,8 @@ def Table(id,password,year,month):
         for i in range(a):
             tmp.append(table.iloc[i].to_list())
         result[idx]["timetable"] = tmp;
-    b = time.time()
-    print(b-a)
+    end = time.time()
+    print(end-start)
     return result
 
 
