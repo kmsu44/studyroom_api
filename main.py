@@ -211,7 +211,7 @@ def Table(id,password,year,month):
     for room in roomdata:
         list_of_urls.append((url,room)) 
     a = time.time()
-    with ThreadPoolExecutor(max_workers=15) as pool:
+    with ThreadPoolExecutor(max_workers=5) as pool:
         response_list = list(pool.map(gettable,list_of_urls))
 
 
