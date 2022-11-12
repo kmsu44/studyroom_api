@@ -10,6 +10,7 @@ from datetime import datetime, date
 import ssl
 from concurrent.futures import ThreadPoolExecutor
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+import time
 app = FastAPI()
 
 # 로그인
@@ -102,6 +103,7 @@ def Checklist(id,password):
 
 @app.get("/Table/{id}/{password}/{year}/{month}")
 def Table(id,password,year,month):
+    a = time.time()
     # month = 0~11
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
@@ -200,9 +202,7 @@ def Table(id,password,year,month):
 
 # 테이블 정보 가져오기
     def gettable(args):
-        print('시작')
         a = session.post(args[0], data = args[1] , verify=False)
-        print('종료')
         return a
     url = "https://library.sejong.ac.kr/studyroom/BookingTable.axa"
     list_of_urls = []
@@ -345,7 +345,8 @@ def Table(id,password,year,month):
         for i in range(a):
             tmp.append(table.iloc[i].to_list())
         result[idx]["timetable"] = tmp;
-        
+    b = time.time()
+    print(b-a)
     return result
 
 
