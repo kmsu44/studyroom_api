@@ -334,8 +334,8 @@ def Table(id,password,year,month):
             'maxuser': 4,
         }]
     for idx,data in enumerate(response_list):
-        html = ' '.join(data.text.split())
-        soup = BeautifulSoup(html, "html.parser")
+        # html = ' '.join(data.text.split())
+        soup = BeautifulSoup(data.text, "html.parser")
         table_html = soup.find_all('table')
         table_arry = pd.read_html(str(table_html))
         table = table_arry[1]
