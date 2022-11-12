@@ -106,21 +106,21 @@ def Table(id,password,year,month):
     # month = 0~11
     start = time.time()
     session = requests.session()
-    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+    # login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
-    my={
-        'mainLogin': 'Y',
-        'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
-    }
-    header={
-        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
-        "Referer" : "https://portal.sejong.ac.kr"
-        }
-    r = session.post(url = login, data=my, headers=header, timeout = 3)
-    url = "http://library.sejong.ac.kr/sso/Login.ax"
-    r = session.post(url,verify=False)
+    # my={
+    #     'mainLogin': 'Y',
+    #     'rtUrl': 'blackboard.sejong.ac.kr',
+    #     'id': id,
+    #     'password': password,
+    # }
+    # header={
+    #     "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+    #     "Referer" : "https://portal.sejong.ac.kr"
+    #     }
+    # r = session.post(url = login, data=my, headers=header, timeout = 3)
+    # url = "http://library.sejong.ac.kr/sso/Login.ax"
+    # r = session.post(url,verify=False)
     # url = "https://library.sejong.ac.kr/studyroom/BookingTable.axa"
     # r = session.post(url,verify=False)
 
