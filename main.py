@@ -121,8 +121,8 @@ def Table(id,password,year,month):
     # r = session.post(url = login, data=my, headers=header, timeout = 3)
     # url = "http://library.sejong.ac.kr/sso/Login.ax"
     # r = session.post(url,verify=False)
-    # url = "https://library.sejong.ac.kr/studyroom/BookingTable.axa"
-    # r = session.post(url,verify=False)
+    url = "https://library.sejong.ac.kr/studyroom/BookingTable.axa"
+    r = session.post(url,verify=False)
 
     roomdata =[
         {
