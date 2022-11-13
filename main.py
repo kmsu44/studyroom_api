@@ -319,8 +319,8 @@ def Table(year,month):
                 'maxuser': 4,
             }]
     for idx,data in enumerate(data):
-            k,d = data
-            html = ' '.join(k.split())
+            k, d = data
+            html = ' '.join(d.split())
             soup = BeautifulSoup(html, "html.parser")
             table_html = soup.find_all('table')
             table_arry = pd.read_html(str(table_html))
