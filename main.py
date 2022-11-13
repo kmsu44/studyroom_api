@@ -109,81 +109,81 @@ def Table(year,month):
     roomdata =[
             {
                 'roomId': 23,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 24,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 25,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 26,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 27,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 28,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 29,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 30,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 31,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 32,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 33,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 8,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 48,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 49,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             },
             {
                 'roomId': 47,
-                'year' : 2022,
-                'month': 11,
+                'year' : year,
+                'month': month,
             }
         ]
-    data = []
+    # data = []
     async def get_html(room):
         async with aiohttp.ClientSession() as session:
             async with session.post(url,data = room, ssl = False) as response:
@@ -330,10 +330,6 @@ def Table(year,month):
             for i in range(a):
                 tmp.append(table.iloc[i].to_list())
             result[idx]["timetable"] = tmp;
-
-
-
-
 
     end = time.time()
     print(end-start)
