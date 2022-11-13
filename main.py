@@ -184,17 +184,17 @@ def Table(year,month):
             }
         ]
     data = []
-    async def get_html(room):
+    async def get_html(idx,room):
         async with aiohttp.ClientSession() as session:
             async with session.post(url,data = room, ssl = False) as response:
-                data.append(await response.text())
+                data.append((idx,await response.text()))
 
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(
         asyncio.gather(
-            *(get_html(room) for room in roomdata)
+            *(get_html(idx,room) for idx,room in enumerate(roomdata))
         )
     )
     result = [
@@ -319,7 +319,8 @@ def Table(year,month):
                 'maxuser': 4,
             }]
     for idx,data in enumerate(data):
-            html = ' '.join(data.split())
+            k,d = data
+            html = ' '.join(k.split())
             soup = BeautifulSoup(html, "html.parser")
             table_html = soup.find_all('table')
             table_arry = pd.read_html(str(table_html))
@@ -329,7 +330,7 @@ def Table(year,month):
             tmp =[]
             for i in range(a):
                 tmp.append(table.iloc[i].to_list())
-            result[idx]["timetable"] = tmp;
+            result[k]["timetable"] = tmp;
 
     end = time.time()
     print(end-start)
