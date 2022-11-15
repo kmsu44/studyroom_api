@@ -400,7 +400,9 @@ def UserFind(id,password,sid,name,year,month,datee):
     'day' : datee
     }
     r = session.post(url, data =data, verify=False)
-    return r.headers['X-JSON']
+    
+    result = r.headers['X-JSON'][25:30]
+    return result
 
 @app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{number}/{roomId}/{ipid0}/{ipid1}/{ipid2}")
 def Reservation(id, password, year, month, datee,startHour, hour, purpose, number,roomId,ipid0,ipid1,ipid2):
