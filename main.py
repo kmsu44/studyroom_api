@@ -402,8 +402,8 @@ def UserFind(id,password,sid,name,year,month,datee):
     r = session.post(url, data =data, verify=False)
     return r.headers['X-JSON']
 
-@app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{maxuser}/{roomId}/{id1}/{name1}/{id2}/{name2}/{ipid0}/{ipid1}/{ipid2}")
-def Reservation(id, password, year, month, datee,startHour, hour, purpose,maxuser,roomId,id1,name1,id2,name2,ipid0,ipid1,ipid2):
+@app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{maxuser}/{roomId}/{ipid0}/{ipid1}/{ipid2}")
+def Reservation(id, password, year, month, datee,startHour, hour, purpose,maxuser,roomId,ipid0,ipid1,ipid2):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -428,10 +428,6 @@ def Reservation(id, password, year, month, datee,startHour, hour, purpose,maxuse
         'startHour' : startHour,
         'closeTime' : startHour,
         'hours' : hour,
-        'altPid1' : id1,
-        'name1' : name1,
-        'altPid2' : id2,
-        'name2' : name2,
         'purpose' : purpose,
         'ipid1' : ipid1,
         'ipid2' : ipid2,
