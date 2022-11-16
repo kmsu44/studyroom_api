@@ -402,7 +402,7 @@ def UserFind(id,password,sid,name,year,month,datee):
     r = session.post(url, data =data, verify=False)
     
     result = {}
-    result['result']=r.headers['X-JSON'][25:30]
+    result['result']=str(r.headers['X-JSON'][25:30])
     
     return result
 
