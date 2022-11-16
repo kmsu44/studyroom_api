@@ -444,12 +444,29 @@ def Reservation(id, password, year, month, datee,startHour, hour, purpose, numbe
     rrr = session.post(booking_url, data = booking_data,verify=False)
     return {"result" : rrr.text}
 
-@app.get("/test")
-def test():
-    result = {}
-    result[1] = 1
-    result[2] = 2
-    return result
+@app.get("/Ipid/{id}/{password}")
+def Ipid(id,password):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+    r = session.post("https://library.sejong.ac.kr/studyroom/Request.ax?roomId=23")
+    soup = BeautifulSoup(r.text, "html.parser")
+    a = soup.select_one('#ipid')
+    return a['value']
+
 # @app.get("/Reservation")
 # def Reservation():
 
