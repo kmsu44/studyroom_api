@@ -402,9 +402,9 @@ def UserFind(id,password,sid,name,year,month,datee):
     r = session.post(url, data =data, verify=False)
     kk = r.headers['X-JSON'][25:31]
     if kk == "id':'1":
-        return (kk)
-    else:
         return 0
+    else:
+        return kk
 
 @app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{number}/{roomId}/{ipid0}/{ipid1}/{ipid2}")
 def Reservation(id, password, year, month, datee,startHour, hour, purpose, number,roomId,ipid0,ipid1,ipid2):
