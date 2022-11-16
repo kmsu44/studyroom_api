@@ -401,7 +401,7 @@ def UserFind(id,password,sid,name,year,month,datee):
     }
     r = session.post(url, data =data, verify=False)
     kk = r.headers['X-JSON'][25:31]
-    if len(kk) == 6:
+    if kk == "id':'1":
         return (kk)
     else:
         return 0
