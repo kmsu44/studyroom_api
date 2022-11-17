@@ -507,7 +507,7 @@ def Reservation(id : str,password : str,data: Data):
         result = rrr.text
         result = result[2:]
     return {'result' : result}
-@app.get("/booktime/{}")
+@app.get("/booktime/{roomId}/{year}/{month}/{day}")
 def booktime(roomId,year,month,day):
     url = "https://library.sejong.ac.kr/studyroom/BookingTime.axa"
     data ={
