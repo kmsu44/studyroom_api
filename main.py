@@ -367,7 +367,7 @@ def Remove(id, password, roomId, cancelMsg, bookingId):
     }
     booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
     r = session.post(booking_url, data = remove_data,verify=False)
-    return {"result" : "몰라용"}
+    return {"result" : "취소 완료"}
 
 @app.get("/UserFind/{id}/{password}/{sid}/{name}/{year}/{month}/{datee}")
 def UserFind(id,password,sid,name,year,month,datee):
@@ -403,43 +403,6 @@ def UserFind(id,password,sid,name,year,month,datee):
     kk = r.headers['X-JSON'][25:31]
     return kk
 
-@app.get("/Reservation/{id}/{password}/{year}/{month}/{datee}/{startHour}/{hour}/{purpose}/{number}/{roomId}/{ipid0}/{ipid1}/{ipid2}")
-def Reservation(id, password, year, month, datee,startHour, hour, purpose, number,roomId,ipid0,ipid1,ipid2):
-    session = requests.session()
-    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
-
-    my={
-        'mainLogin': 'Y',
-        'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
-    }
-    header={
-        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
-        "Referer" : "https://portal.sejong.ac.kr"
-        }
-    r = session.post(url = login, data=my, headers=header, timeout = 3)
-    url = "http://library.sejong.ac.kr/sso/Login.ax"
-    r = session.post(url,verify=False)
-    # 파싱
-    booking_data = {
-        'year' : year,
-        'month' : month,
-        'day' : datee,
-        'startHour' : startHour,
-        'closeTime' : startHour,
-        'hours' : hour,
-        'purpose' : purpose,
-        'ipid1' : ipid1,
-        'ipid2' : ipid2,
-        'mode' : 'INSERT',
-        'idx' : number,
-        'ipid' : ipid0,
-        'roomId' : roomId
-    }
-    booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
-    rrr = session.post(booking_url, data = booking_data,verify=False)
-    return {"result" : rrr.text}
 
 @app.get("/Ipid/{id}/{password}")
 def Ipid(id,password):
@@ -464,8 +427,85 @@ def Ipid(id,password):
     a = soup.select_one('#ipid')
     return a['value']
 
-# @app.get("/Reservation")
-# def Reservation():
+
+
+class Data(BaseModel):
+    year : str
+    month : str
+    day : str
+    startHour : str
+    closeTime : str
+    hours : str
+    purpose : str
+    ipid : str
+    ipid1 : Union[str, None] = None
+    ipid2 : Union[str, None] = None
+    ipid3 : Union[str, None] = None
+    ipid4 : Union[str, None] = None
+    ipid5 : Union[str, None] = None
+    ipid6 : Union[str, None] = None
+    ipid7 : Union[str, None] = None
+    idx : str
+    roomId : str
+
+class Result(BaseModel):
+    result :str
+
+@app.post("/Reservation/{id}/{password}",response_model=dict[str, str])
+def Reservation(id : str,password : str,data: Data):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+    # 파싱
+    booking_data = {
+        'year' : data.year,
+        'month' : data.month,
+        'day' : data.day,
+        'startHour' : data.startHour,
+        'closeTime' : data.closeTime,
+        'hours' : data.hours,
+        'purpose' : data.purpose,
+        'mode' : 'INSERT',
+        'idx' : data.idx,
+        'ipid' : data.ipid,
+        'roomId' : data.roomId
+    }
+    if data.ipid1:
+        booking_data["ipid1"] = data.ipid1
+    if data.ipid2:
+        booking_data["ipid2"] = data.ipid2
+    if data.ipid3:
+        booking_data["ipid3"] = data.ipid3
+    if data.ipid4:
+        booking_data["ipid4"] = data.ipid4
+    if data.ipid5:
+        booking_data["ipid5"] = data.ipid5
+    if data.ipid6:
+        booking_data["ipid6"] = data.ipid6
+    if data.ipid7:
+        booking_data["ipid7"] = data.ipid7
+
+    booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
+    rrr = session.post(booking_url, data = booking_data,verify=False)
+    if rrr.text == '':
+        result = '예약 완료'
+    else:
+        result = rrr.text
+        result = result[2:]
+    return {'result' : result}
 
 # uvicorn main:app --reload
 # http://52.79.223.149
