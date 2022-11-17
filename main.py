@@ -12,6 +12,7 @@ from timeit import default_timer as dt
 import time
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 from timeit import default_timer as dt
+from typing import Dict
 app = FastAPI()
 
 # 로그인
@@ -451,7 +452,7 @@ class Data(BaseModel):
 class Result(BaseModel):
     result :str
 
-@app.post("/Reservation/{id}/{password}",response_model=dict[str, str])
+@app.post("/Reservation/{id}/{password}",response_model=Dict[str, str])
 def Reservation(id : str,password : str,data: Data):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
