@@ -507,6 +507,27 @@ def Reservation(id : str,password : str,data: Data):
         result = rrr.text
         result = result[2:]
     return {'result' : result}
+@app.get("/booktime/{}")
+def booktime(roomId,year,month,day):
+    url = "https://library.sejong.ac.kr/studyroom/BookingTime.axa"
+    data ={
+    "roomId" : roomId,
+    "year" : year,
+    "month" : month,
+    "day" : day
+    }
+    session = requests.session()
+    r = session.post(url,data=data,verify=False)
+    soup = BeautifulSoup(r.text, "html.parser")
+    a = soup.select_one('#startHour')
+    b = a.find_all('option')
+    result = []
+    for i in b:
+        result.append(i['value'])
+    return result
+
+
+
 
 # uvicorn main:app --reload
 # http://52.79.223.149

@@ -1,8 +1,8 @@
 {
   "year": "2022",
   "month": "11",
-  "day": "17",
-  "startHour": "18",
+  "day": "18",
+  "startHour": "10",
   "closeTime": "10",
   "hours": "1",
   "purpose": "스터디",
