@@ -539,7 +539,44 @@ def booktime(roomId,year,month,day):
         result.append(i['value'])
     return result
 
+@app.get("/accompany/{id}/{password}/{roomId}/{bookingId}")
+def accompany(id, password,roomId,bookingId):
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
+    url = "https://library.sejong.ac.kr/studyroom/BookingDetail.axa"
+
+    ipid = Ipid(id,password)
+    data = {
+    "bookingId" : bookingId,
+    "ipid" : ipid,
+    "roomId" : roomId,
+    }
+    r = session.post(url, data,verify=False)
+    soup = BeautifulSoup(r.text, "html.parser")
+    tablelist = soup.find_all('table')
+    datatable = tablelist[2]
+    p = parser.make2d(datatable)
+    a = p[4][1]
+    a = a.replace('\t','')
+    a = a.replace('\r','')
+    a = a.replace(' ','')
+    a = a.replace('\xa0','')
+    b = list(a.split('\n'))
+    return(b)
 
 
 # uvicorn main:app --reload
