@@ -162,17 +162,17 @@ def Table(year,month):
                 'roomId': 33,
                 'year' : year,
                 'month': month,
-            }
+            },
             # {
             #     'roomId': 8,
             #     'year' : year,
             #     'month': month,
             # },
-            # {
-            #     'roomId': 48,
-            #     'year' : year,
-            #     'month': month,
-            # },
+            {
+                'roomId': 48,
+                'year' : year,
+                'month': month,
+            },
             # {
             #     'roomId': 49,
             #     'year' : year,
