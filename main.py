@@ -162,27 +162,27 @@ def Table(year,month):
                 'roomId': 33,
                 'year' : year,
                 'month': month,
-            },
-            {
-                'roomId': 8,
-                'year' : year,
-                'month': month,
-            },
-            {
-                'roomId': 48,
-                'year' : year,
-                'month': month,
-            },
-            {
-                'roomId': 49,
-                'year' : year,
-                'month': month,
-            },
-            {
-                'roomId': 47,
-                'year' : year,
-                'month': month,
             }
+            # {
+            #     'roomId': 8,
+            #     'year' : year,
+            #     'month': month,
+            # },
+            # {
+            #     'roomId': 48,
+            #     'year' : year,
+            #     'month': month,
+            # },
+            # {
+            #     'roomId': 49,
+            #     'year' : year,
+            #     'month': month,
+            # },
+            # {
+            #     'roomId': 47,
+            #     'year' : year,
+            #     'month': month,
+            # }
         ]
     data = []
     async def get_html(idx,room):
@@ -286,39 +286,40 @@ def Table(year,month):
                 'closetime': 21,
                 'minuser': 3,
                 'maxuser': 8,
-            },
-            {
-                'roomId': 8,
-                'name': '교육실 (2층)',
-                'opentime': 10,
-                'closetime': 17,
-                'minuser': 2,
-                'maxuser': 25,
-            },
-            {
-                'roomId': 48,
-                'name': '대양 AI 콜라보랩 Talk Room3',
-                'opentime': 10,
-                'closetime': 16,
-                'minuser': 2,
-                'maxuser': 4,
-            },
-            {
-                'roomId': 49,
-                'name': '대양 AI 콜라보랩 라운지A',
-                'opentime': 10,
-                'closetime': 16,
-                'minuser': 2,
-                'maxuser': 4,
-            },
-            {
-                'roomId': 47,
-                'name': '대양 AI 콜라보랩 라운지A',
-                'opentime': 10,
-                'closetime': 16,
-                'minuser': 2,
-                'maxuser': 4,
-            }]
+            }
+            # {
+            #     'roomId': 8,
+            #     'name': '교육실 (2층)',
+            #     'opentime': 10,
+            #     'closetime': 17,
+            #     'minuser': 2,
+            #     'maxuser': 25,
+            # },
+            # {
+            #     'roomId': 48,
+            #     'name': '대양 AI 콜라보랩 Talk Room3',
+            #     'opentime': 10,
+            #     'closetime': 16,
+            #     'minuser': 2,
+            #     'maxuser': 4,
+            # },
+            # {
+            #     'roomId': 49,
+            #     'name': '대양 AI 콜라보랩 라운지A',
+            #     'opentime': 10,
+            #     'closetime': 16,
+            #     'minuser': 2,
+            #     'maxuser': 4,
+            # },
+            # {
+            #     'roomId': 47,
+            #     'name': '대양 AI 콜라보랩 라운지A',
+            #     'opentime': 10,
+            #     'closetime': 16,
+            #     'minuser': 2,
+            #     'maxuser': 4,
+            # }
+            ]
     for idx,data in enumerate(data):
             k, d = data
             html = ' '.join(d.split())
@@ -509,6 +510,7 @@ def Reservation(id : str,password : str,data: Data):
     return {'result' : result}
 @app.get("/booktime/{roomId}/{year}/{month}/{day}")
 def booktime(roomId,year,month,day):
+    session = requests.session()
     url = "https://library.sejong.ac.kr/studyroom/BookingTime.axa"
     data ={
     "roomId" : roomId,
@@ -516,7 +518,6 @@ def booktime(roomId,year,month,day):
     "month" : month,
     "day" : day
     }
-    session = requests.session()
     r = session.post(url,data=data,verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
     a = soup.select_one('#startHour')
