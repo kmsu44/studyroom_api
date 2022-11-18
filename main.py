@@ -281,7 +281,7 @@ def Table(year,month):
             },
             {
                 'roomId': 33,
-                'name': '24 스터디룸 (4층)',
+                'name': '24 스터디룸 (4층) 당일예약',
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
