@@ -229,7 +229,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 27,
@@ -237,7 +237,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 28,
@@ -245,7 +245,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 29,
@@ -253,7 +253,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 30,
@@ -261,7 +261,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 31,
@@ -269,7 +269,7 @@ def Table(year,month):
                 'opentime': 10,
                 'closetime': 21,
                 'minuser': 3,
-                'maxuser': 8,
+                'maxuser': 6,
             },
             {
                 'roomId': 32,
