@@ -41,67 +41,72 @@ def Login(id,password):
 #예약 리스트
 @app.get("/checklist/{id}/{password}")
 def Checklist(id,password):
-  session = requests.session()
-  login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
+    session = requests.session()
+    login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
-  my={
-      'mainLogin': 'Y',
-      'rtUrl': 'blackboard.sejong.ac.kr',
-      'id': id,
-      'password': password,
-  }
-  header={
-      "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
-      "Referer" : "https://portal.sejong.ac.kr"
-      }
-  r = session.post(url = login, data=my, headers=header, timeout = 3,verify =False)
-  url = "http://library.sejong.ac.kr/sso/Login.ax"
-  r = session.post(url,verify=False)
+    my={
+        'mainLogin': 'Y',
+        'rtUrl': 'blackboard.sejong.ac.kr',
+        'id': id,
+        'password': password,
+    }
+    header={
+        "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        "Referer" : "https://portal.sejong.ac.kr"
+        }
+    r = session.post(url = login, data=my, headers=header, timeout = 3,verify =False)
+    url = "http://library.sejong.ac.kr/sso/Login.ax"
+    r = session.post(url,verify=False)
 
 
-  # 파싱
-  url = "https://library.sejong.ac.kr/studyroom/List.axa"
-  r = session.post(url, verify=False)
-  soup = BeautifulSoup(r.text, "html.parser")
-  tmp = soup.find_all('tbody')
-  tmp = tmp[1]
-  url = tmp.find_all('a')
-  script = []
-  for i in url:
-      if 'javascript:studyroom.goStudyRoomBookingDetail' in i['href']:
-          script.append(i['href'])
-  studyroom_id = []
-  for i in script:
-      t = ''
-      for j in i[47:]:
-          if j == "'":
-              break
-          t += j
-      studyroom_id.append(t)
-  p = parser.make2d(tmp)
-  result = []
-  if p[0][2] != '* 예약내역이 없습니다.':
-    result = []
-    for idx, data in enumerate(p):
-        room = {}
-        room["title"] = data[0]
-        date = data[1][0:10]
-        datetime_date = datetime.strptime(date,'%Y/%m/%d')
-        day = datetime_date.weekday()
-        month = datetime_date.month
-        datee = datetime_date.day
-        room["month"] = month
-        room["datee"] = datee
-        room["day"] = day 
-        
-        room["starttime"] = data[1][11:13]
-        time = data[1][20]
-        room["endtime"] = int(data[1][11:13]) + int(time)
-        room["number"] = data[2]
-        room["bookingId"] = studyroom_id[idx]
-        result.append(room)
+    # 파싱
+    url = "https://library.sejong.ac.kr/studyroom/List.axa"
+    r = session.post(url, verify=False)
+    soup = BeautifulSoup(r.text, "html.parser")
+    tmp = soup.find_all('tbody')
+    tmp = tmp[1]
+    url = tmp.find_all('a')
+    script = []
+    for i in url:
+        if 'javascript:studyroom.goStudyRoomBookingDetail' in i['href']:
+            script.append(i['href'])
+    studyroom_id = []
+    for i in script:
+        t = ''
+        tt = ''
+        for j in i[47:]:
+            if j == "'":
+                break
+            t += j
+        for k in i[65:]:
+            if k =="'":
+                break
+            tt +=k
+            studyroom_id.append((t,tt))
+    p = parser.make2d(tmp)
+    if p[0][2] != '* 예약내역이 없습니다.':
+        result = []
+        for idx, data in enumerate(p):
+            room = {}
+            room["title"] = data[0]
+            date = data[1][0:10]
+            datetime_date = datetime.strptime(date,'%Y/%m/%d')
+            day = datetime_date.weekday()
+            month = datetime_date.month
+            datee = datetime_date.day
+            room["month"] = month
+            room["datee"] = datee
+            room["day"] = day 
+            
+            room["starttime"] = data[1][11:13]
+            time = data[1][20]
+            room["endtime"] = int(data[1][11:13]) + int(time)
+            room["number"] = data[2]
+            room["bookingId"] = studyroom_id[idx][0]
+            room["roomId"] = studyroom_id[idx][1]
+            result.append(room)
 
-  return result
+    return result
 
 @app.get("/Table/{year}/{month}")
 def Table(year,month):
