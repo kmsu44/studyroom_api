@@ -351,8 +351,8 @@ def Table(year,month):
     return result
 
 
-@app.get("/Remove/{id}/{password}/{roomId}/{cancelMsg}/{bookingId}")
-def Remove(id, password, roomId, cancelMsg, bookingId):
+@app.get("/Remove/{id}/{password}/{cancelMsg}/{bookingId}")
+def Remove(id, password,cancelMsg, bookingId):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -375,7 +375,6 @@ def Remove(id, password, roomId, cancelMsg, bookingId):
         'cancelMsg': cancelMsg,
         'bookingId': bookingId,
         'expired': 'C',
-        'roomId': roomId,
         'mode': 'update',
         'classId': '0'
     }
