@@ -538,8 +538,8 @@ def booktime(roomId,year,month,day):
         result.append(i['value'])
     return result
 
-@app.get("/accompany/{id}/{password}/{roomId}/{bookingId}")
-def accompany(id, password,roomId,bookingId):
+@app.get("/accompany/{id}/{password}/{bookingId}")
+def accompany(id, password,bookingId):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -562,7 +562,6 @@ def accompany(id, password,roomId,bookingId):
     data = {
     "bookingId" : bookingId,
     "ipid" : ipid,
-    "roomId" : roomId,
     }
     r = session.post(url, data,verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
