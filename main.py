@@ -82,8 +82,7 @@ def Checklist(id,password):
             if k =="'":
                 break
             tt +=k
-            print(t,tt)
-            studyroom_id.append((t,tt))
+        studyroom_id.append((t,tt))
     p = parser.make2d(tmp)
     if p[0][2] != '* 예약내역이 없습니다.':
         result = []
