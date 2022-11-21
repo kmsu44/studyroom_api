@@ -81,7 +81,8 @@ def Checklist(id,password):
         for k in i[64:]:
             if k =="'":
                 break
-            tt +=k
+            tt += k
+        print(t,tt)
         studyroom_id.append((t,tt))
     p = parser.make2d(tmp)
     if p[0][2] != '* 예약내역이 없습니다.':
@@ -105,7 +106,6 @@ def Checklist(id,password):
             room["bookingId"] = studyroom_id[idx][0]
             room["roomId"] = studyroom_id[idx][1]
             result.append(room)
-
     return result
 
 @app.get("/Table/{year}/{month}")
