@@ -80,6 +80,7 @@ def Checklist(id,password):
             t += j
         studyroom_id.append(t)
     p = parser.make2d(tmp)
+    result = []
     if p[0][2] != '* 예약내역이 없습니다.':
         result = []
         for idx, data in enumerate(p):
@@ -98,7 +99,7 @@ def Checklist(id,password):
             time = data[1][20]
             room["endtime"] = int(data[1][11:13]) + int(time)
             room["number"] = data[2]
-            room["bookingId"] = studyroom_id[idx][0]
+            room["bookingId"] = studyroom_id[idx]
             result.append(room)
     return result
 
