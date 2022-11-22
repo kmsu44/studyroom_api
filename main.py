@@ -20,8 +20,8 @@ class User(BaseModel):
     id : str
     password: str
 class Date(BaseModel):
-    year : int
-    month : int
+    year : str
+    month : str
 class RemoveData(BaseModel):
     id : str
     password : str
