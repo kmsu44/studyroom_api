@@ -84,7 +84,7 @@ def Login(user:User):
     if 'ssotoken' in r.headers.get('Set-Cookie', ''):
         return {"result" : "1" }
     else:
-        return {"result" : "0" }
+        return {"result" : "0" }    
 @app.post("/checklist/")
 def Checklist(user:User):
     session = requests.session()
@@ -151,9 +151,7 @@ def Checklist(user:User):
             room["bookingId"] = studyroom_id[idx][0]
             room["roomId"] = studyroom_id[idx][1]
             result.append(room)
-        return result
-    else:
-        return {'result' : 'result'}
+    return result
 @app.post("/Table/")
 def Table(date : Date):
     start = time.time()
