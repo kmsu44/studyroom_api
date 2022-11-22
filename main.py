@@ -20,8 +20,8 @@ class User(BaseModel):
     id : str
     password: str
 class Date(BaseModel):
-    year : str
-    month : str
+    year : int
+    month : int
 class RemoveData(BaseModel):
     id : str
     password : str
@@ -218,6 +218,11 @@ def Table(date : Date):
             #     'year' : year,
             #     'month': month,
             # },
+            # {
+            #     'roomId': 47,
+            #     'year' : year,
+            #     'month': month,
+            # }
             {
                 'roomId': 48,
                 'year' : date.year,
@@ -225,11 +230,6 @@ def Table(date : Date):
             },
             # {
             #     'roomId': 49,
-            #     'year' : year,
-            #     'month': month,
-            # },
-            # {
-            #     'roomId': 47,
             #     'year' : year,
             #     'month': month,
             # }
@@ -356,6 +356,14 @@ def Table(date : Date):
             #     'minuser': 2,
             #     'maxuser': 25,
             # },
+            # {
+            #     'roomId': 47,
+            #     'name': '대양 AI 콜라보랩 라운지A',
+            #     'opentime': 10,
+            #     'closetime': 16,
+            #     'minuser': 2,
+            #     'maxuser': 4,
+            # },
             {
                 'roomId': 48,
                 'name': '대양 AI 콜라보랩 Talk Room3',
@@ -367,20 +375,12 @@ def Table(date : Date):
             },
             # {
             #     'roomId': 49,
-            #     'name': '대양 AI 콜라보랩 라운지A',
+            #     'name': '대양 AI 콜라보랩 라운지B',
             #     'opentime': 10,
             #     'closetime': 16,
             #     'minuser': 2,
             #     'maxuser': 4,
             # },
-            # {
-            #     'roomId': 47,
-            #     'name': '대양 AI 콜라보랩 라운지A',
-            #     'opentime': 10,
-            #     'closetime': 16,
-            #     'minuser': 2,
-            #     'maxuser': 4,
-            # }
             ]
     for idx,data in enumerate(data):
             k, d = data
