@@ -16,16 +16,62 @@ from typing import Dict
 app = FastAPI()
 
 # 로그인
-@app.get("/login/{id}/{password}")
-def Login(id,password):
+class User(BaseModel):
+    id : str
+    password: str
+class Date(BaseModel):
+    year : str
+    month : str
+class RemoveData(BaseModel):
+    id : str
+    password : str
+    cancelMsg:str
+    bookingId:str   
+class UserFindData(BaseModel):
+    id :str
+    password: str
+    sid : str
+    name : str
+    year : str
+    month : str
+    datee : str
+class ReservationData(BaseModel):
+    year : str
+    month : str
+    day : str
+    startHour : str
+    closeTime : str
+    hours : str
+    purpose : str
+    ipid : str
+    ipid1 : Union[str, None] = None
+    ipid2 : Union[str, None] = None
+    ipid3 : Union[str, None] = None
+    ipid4 : Union[str, None] = None
+    ipid5 : Union[str, None] = None
+    ipid6 : Union[str, None] = None
+    ipid7 : Union[str, None] = None
+    idx : str
+    roomId : str   
+class BooktimeData(BaseModel):
+    roomId:str
+    year : str
+    month : str
+    day : str
+class Acoompany(BaseModel):
+    id : str
+    password : str
+    bookingId : str
+@app.post("/login/")
+def Login(user:User):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': user.id,
+        'password': user.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -33,22 +79,20 @@ def Login(id,password):
         }
     
     r = session.post(url = login, data=my, headers=header, timeout = 3, verify =False)
-    
     if 'ssotoken' in r.headers.get('Set-Cookie', ''):
         return {"result" : "1" }
     else:
         return {"result" : "0" }
-#예약 리스트
-@app.get("/checklist/{id}/{password}")
-def Checklist(id,password):
+@app.post("/checklist/")
+def Checklist(user:User):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': user.id,
+        'password': user.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -102,66 +146,65 @@ def Checklist(id,password):
             room["bookingId"] = studyroom_id[idx]
             result.append(room)
     return result
-
-@app.get("/Table/{year}/{month}")
-def Table(year,month):
+@app.post("/Table/")
+def Table(date : Date):
     start = time.time()
     url = "https://library.sejong.ac.kr/studyroom/BookingTable.axa"
     roomdata =[
             {
                 'roomId': 23,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 24,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 25,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 26,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 27,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 28,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 29,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 30,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 31,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 32,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             {
                 'roomId': 33,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             # {
             #     'roomId': 8,
@@ -170,8 +213,8 @@ def Table(year,month):
             # },
             {
                 'roomId': 48,
-                'year' : year,
-                'month': month,
+                'year' : date.year,
+                'month': date.month,
             },
             # {
             #     'roomId': 49,
@@ -349,18 +392,16 @@ def Table(year,month):
     end = time.time()
     print(end-start)
     return result
-
-
-@app.get("/Remove/{id}/{password}/{cancelMsg}/{bookingId}")
-def Remove(id, password,cancelMsg, bookingId):
+@app.post("/Remove/")
+def Remove(data:RemoveData):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': data.id,
+        'password': data.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -372,8 +413,8 @@ def Remove(id, password,cancelMsg, bookingId):
     
     #실행
     remove_data = {
-        'cancelMsg': cancelMsg,
-        'bookingId': bookingId,
+        'cancelMsg': data.cancelMsg,
+        'bookingId': data.bookingId,
         'expired': 'C',
         'mode': 'update',
         'classId': '0'
@@ -381,17 +422,16 @@ def Remove(id, password,cancelMsg, bookingId):
     booking_url = "https://library.sejong.ac.kr/studyroom/BookingProcess.axa"
     r = session.post(booking_url, data = remove_data,verify=False)
     return {"result" : "취소 완료"}
-
-@app.get("/UserFind/{id}/{password}/{sid}/{name}/{year}/{month}/{datee}")
-def UserFind(id,password,sid,name,year,month,datee):
+@app.post("/UserFind/")
+def UserFind(data : UserFindData):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': data.id,
+        'password': data.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -405,28 +445,26 @@ def UserFind(id,password,sid,name,year,month,datee):
     # 파싱
     url = "https://library.sejong.ac.kr/studyroom/UserFind.axa"
     data = {
-    'altPid' : sid,
-    'name': name,
+    'altPid' : data.sid,
+    'name': data.name,
     'userBlockUser' : "Y",
-    'year': year,
-    'month' : month,
-    'day' : datee
+    'year': data.year,
+    'month' : data.month,
+    'day' : data.datee
     }
     r = session.post(url, data =data, verify=False)
     kk = r.headers['X-JSON'][25:31]
     return kk
-
-
-@app.get("/Ipid/{id}/{password}")
-def Ipid(id,password):
+@app.post("/Ipid")
+def Ipid(data:User):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': data.id,
+        'password': data.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -439,41 +477,16 @@ def Ipid(id,password):
     soup = BeautifulSoup(r.text, "html.parser")
     a = soup.select_one('#ipid')
     return a['value']
-
-
-
-class Data(BaseModel):
-    year : str
-    month : str
-    day : str
-    startHour : str
-    closeTime : str
-    hours : str
-    purpose : str
-    ipid : str
-    ipid1 : Union[str, None] = None
-    ipid2 : Union[str, None] = None
-    ipid3 : Union[str, None] = None
-    ipid4 : Union[str, None] = None
-    ipid5 : Union[str, None] = None
-    ipid6 : Union[str, None] = None
-    ipid7 : Union[str, None] = None
-    idx : str
-    roomId : str
-
-class Result(BaseModel):
-    result :str
-
-@app.post("/Reservation/{id}/{password}",response_model=Dict[str, str])
-def Reservation(id : str,password : str,data: Data):
+@app.post("/Reservation/")
+def Reservation(data: ReservationData):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': data.id,
+        'password': data.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -519,15 +532,15 @@ def Reservation(id : str,password : str,data: Data):
         result = rrr.text
         result = result[2:]
     return {'result' : result}
-@app.get("/booktime/{roomId}/{year}/{month}/{day}")
-def booktime(roomId,year,month,day):
+@app.post("/Booktime")
+def Booktime(data:BooktimeData):
     session = requests.session()
     url = "https://library.sejong.ac.kr/studyroom/BookingTime.axa"
     data ={
-    "roomId" : roomId,
-    "year" : year,
-    "month" : month,
-    "day" : day
+    "roomId" : data.roomId,
+    "year" : data.year,
+    "month" : data.month,
+    "day" : data.day
     }
     r = session.post(url,data=data,verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
@@ -537,17 +550,16 @@ def booktime(roomId,year,month,day):
     for i in b:
         result.append(i['value'])
     return result
-
-@app.get("/accompany/{id}/{password}/{bookingId}")
-def accompany(id, password,bookingId):
+@app.post("/accompany")
+def accompany(data : Acoompany):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
     my={
         'mainLogin': 'Y',
         'rtUrl': 'blackboard.sejong.ac.kr',
-        'id': id,
-        'password': password,
+        'id': data.id,
+        'password': data.password,
     }
     header={
         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
@@ -557,11 +569,8 @@ def accompany(id, password,bookingId):
     url = "http://library.sejong.ac.kr/sso/Login.ax"
     r = session.post(url,verify=False)
     url = "https://library.sejong.ac.kr/studyroom/BookingDetail.axa"
-
-    ipid = Ipid(id,password)
     data = {
-    "bookingId" : bookingId,
-    "ipid" : ipid,
+    "bookingId" : data.bookingId,
     }
     r = session.post(url, data,verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
