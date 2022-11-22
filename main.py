@@ -36,6 +36,8 @@ class UserFindData(BaseModel):
     month : str
     datee : str
 class ReservationData(BaseModel):
+    id : str
+    password : str
     year : str
     month : str
     day : str
