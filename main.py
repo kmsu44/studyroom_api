@@ -153,7 +153,7 @@ def Checklist(user:User):
             result.append(room)
         return result
     else:
-        return {'result' : 1}
+        return {'result' : "1"}
 @app.post("/Table/")
 def Table(date : Date):
     start = time.time()
