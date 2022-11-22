@@ -151,7 +151,6 @@ def Checklist(user:User):
             room["bookingId"] = studyroom_id[idx][0]
             room["roomId"] = studyroom_id[idx][1]
             result.append(room)
-    
     return result
 @app.post("/Table/")
 def Table(date : Date):
