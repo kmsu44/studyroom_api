@@ -152,6 +152,8 @@ def Checklist(user:User):
             room["roomId"] = studyroom_id[idx][1]
             result.append(room)
         return result
+    else:
+        return {'result' : 'result'}
 @app.post("/Table/")
 def Table(date : Date):
     start = time.time()
