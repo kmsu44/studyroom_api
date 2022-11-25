@@ -247,7 +247,7 @@ def Table(date : Date):
             *(get_html(idx,room) for idx,room in enumerate(roomdata))
         )
     )
-    closetime = 16
+    closetime = 21
     result = [
             {
                 'roomId': 23,
