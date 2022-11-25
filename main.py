@@ -247,12 +247,13 @@ def Table(date : Date):
             *(get_html(idx,room) for idx,room in enumerate(roomdata))
         )
     )
+    closetime = 16
     result = [
             {
                 'roomId': 23,
                 'name': '14 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 8,
                 'info' : "본인포함 3~8인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -261,7 +262,7 @@ def Table(date : Date):
                 'roomId': 24,
                 'name': '15 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 8,
                 'info' : "본인포함 3~8인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -270,7 +271,7 @@ def Table(date : Date):
                 'roomId': 25,
                 'name': '16 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 8,
                 'info' : "본인포함 3~8인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -279,7 +280,7 @@ def Table(date : Date):
                 'roomId': 26,
                 'name': '17 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -288,7 +289,7 @@ def Table(date : Date):
                 'roomId': 27,
                 'name': '18 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -297,7 +298,7 @@ def Table(date : Date):
                 'roomId': 28,
                 'name': '19 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -306,7 +307,7 @@ def Table(date : Date):
                 'roomId': 29,
                 'name': '20 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -315,7 +316,7 @@ def Table(date : Date):
                 'roomId': 30,
                 'name': '21 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -324,7 +325,7 @@ def Table(date : Date):
                 'roomId': 31,
                 'name': '22 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 6,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -333,7 +334,7 @@ def Table(date : Date):
                 'roomId': 32,
                 'name': '23 스터디룸 (4층)',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 8,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -342,7 +343,7 @@ def Table(date : Date):
                 'roomId': 33,
                 'name': '24 스터디룸 (4층) 당일예약',
                 'opentime': 10,
-                'closetime': 21,
+                'closetime': closetime,
                 'minuser': 3,
                 'maxuser': 8,
                 'info' : "본인포함 3~6인 이용가능.\n토요일 개방시간 : 10:00~16:00\n방학중  개방시간 : 10:00~16:00.\n일요일, 공휴일은  휴실\n※ 예약 후 미사용시 예약취소합니다. 위반시 예약자는 1개월간 예약할 수 없습니다.(예약시간 20분경과시 이용제한)"
@@ -396,7 +397,7 @@ def Table(date : Date):
             result[k]["timetable"] = tmp;
 
     end = time.time()
-    print(end-start)
+    # print(end-start)
     return result
 @app.post("/Remove/")
 def Remove(data:RemoveData):
