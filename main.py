@@ -86,7 +86,7 @@ def Login(user:User):
     else:
         return {"result" : "0" }    
 @app.post("/checklist/")
-def Checklist(user:User):
+def checklist(user:User):
     session = requests.session()
     login = "https://portal.sejong.ac.kr/jsp/login/login_action.jsp"
 
@@ -103,35 +103,32 @@ def Checklist(user:User):
     r = session.post(url = login, data=my, headers=header, timeout = 3,verify =False)
     url = "http://library.sejong.ac.kr/sso/Login.ax"
     r = session.post(url,verify=False)
-
-
-    # 파싱
     url = "https://library.sejong.ac.kr/studyroom/List.axa"
     r = session.post(url, verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
     tmp = soup.find_all('tbody')
     tmp = tmp[1]
     url = tmp.find_all('a')
+    script = []
+    for i in url:
+        if 'javascript:studyroom.goStudyRoomBookingDetail' in i['href']:
+            script.append(i['href'])
+    studyroom_id = []
+    for i in script:
+        t = ''
+        tt = ''
+        for j in i[47:]:
+            if j == "'":
+                break
+            t += j
+        for k in i[65:]:
+            if k =="'":
+                break
+            tt +=k
+        studyroom_id.append((t,tt))
     p = parser.make2d(tmp)
     result = []
     if p[0][2] != '* 예약내역이 없습니다.':
-        script = []
-        for i in url:
-            if 'javascript:studyroom.goStudyRoomBookingDetail' in i['href']:
-                script.append(i['href'])
-        studyroom_id = []
-        for i in script:
-            t = ''
-            tt = ''
-            for j in i[47:]:
-                if j == "'":
-                    break
-                t += j
-            for k in i[65:]:
-                if k =="'":
-                    break
-                tt +=k
-        studyroom_id.append((t,tt))
         for idx, data in enumerate(p):
             room = {}
             room["title"] = data[0]
