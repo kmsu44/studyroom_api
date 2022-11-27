@@ -22,6 +22,7 @@ class User(BaseModel):
 class Date(BaseModel):
     year : str
     month : str
+    mode : Union[str, None] = None
 class RemoveData(BaseModel):
     id : str
     password : str
@@ -158,56 +159,67 @@ def Table(date : Date):
                 'roomId': 23,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 24,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 25,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 26,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 27,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 28,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 29,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 30,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 31,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 32,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             {
                 'roomId': 33,
                 'year' : date.year,
                 'month': date.month,
+                'mode' : date.mode
             },
             # {
             #     'roomId': 8,
